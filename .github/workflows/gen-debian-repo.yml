@@ -6,7 +6,7 @@ on:
         - cron: "20 */12 * * *"
 
 jobs:
-    update:
+    Build-Repo:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
@@ -47,7 +47,20 @@ jobs:
                   DAT_VERSION="$(cat ./v2ray-rules-dat_version.txt)"
                   cat ./nfpm/v2ray-rules-dat.yaml | sed "s/REAL_VERSION/$DAT_VERSION/g" > /tmp/v2ray-rules-dat.yaml
                   nfpm package --config /tmp/v2ray-rules-dat.yaml --target ./archive/v2ray-rules-dat_${DAT_VERSION}_all.deb
-            - name: Upload Artifacts
-              uses: actions/upload-artifact@v4
+            - name: Install reprepro gpg
+              run: |
+                sudo apt update
+                sudo apt install -y reprepro gnupg
+            - name: Import GPG key
+              uses: crazy-max/ghaction-import-gpg@v6
               with:
-                  path: archive
+                  gpg_private_key: ${{ secrets.PRIVATE_KEY }}
+                  passphrase: ${{ secrets.PRIVATE_KEY_PWD }}
+            - name: Export public key
+              run: |
+                  gpg --output public-key.asc --armor --export C27FABADF6B07760
+            - name: Create Debian Repo
+              run: |
+                  bash -c "$(cat create-debian-repo.sh)"
+                  ls -l repo
+            
