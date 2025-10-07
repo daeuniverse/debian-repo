@@ -62,5 +62,10 @@ jobs:
             - name: Create Debian Repo
               run: |
                   bash -c "$(cat create-debian-repo.sh)"
-                  ls -l repo
-            
+            - name: Compress repo
+              run: |
+                  tar -czvf repo.tar.gz repo
+            - name: Upload Artifact
+              uses: nanoufo/action-upload-artifacts-and-release-assets@v2
+              with:
+                path: repo.tar.gz
