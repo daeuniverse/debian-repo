@@ -37,7 +37,7 @@ jobs:
               run: |
                   mkdir -p archive
                   for apps in v2ray v2raya xray juicity dae; do
-                      VERSION=$(cat $apps_version.txt)
+                      VERSION="$(cat "${apps}"_version.txt)"
                       for arch in amd64 arm64 i386 riscv64; do
                           cat nfpm/$apps.yaml | sed "s/REAL_VERSION/$VERSION/g" | sed "s/REAL_ARCH/$arch/g" > /tmp/$apps_$arch.yaml
                           nfpm package --config /tmp/$apps_$arch.yaml --target ./archive/$apps_${VERSION}_$arch.deb
