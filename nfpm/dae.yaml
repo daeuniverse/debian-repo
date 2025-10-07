@@ -1,0 +1,38 @@
+# This is an example nfpm configuration file.
+# Make sure to check the documentation at https://nfpm.goreleaser.com
+#
+# The lines below are called `modelines`. See `:help modeline`
+# Feel free to remove those if you don't want/need to use them.
+# yaml-language-server: $schema=https://nfpm.goreleaser.com/static/schema.json
+# vim: set ts=2 sw=2 tw=0 fo=cnqoj
+
+name: "dae"
+arch: "REAL_ARCH"
+platform: "linux"
+version: "REAL_VERSION"
+section: "default"
+priority: "extra"
+provides:
+  - dae
+depends:
+  - v2ray-rules-dat
+maintainer: "dae@daeuniverse"
+description: |
+  dae is an eBPF-based Linux high-performance transparent proxy solution.
+vendor: "daeuniverse"
+homepage: "https://github.com/daeuniverse/dae"
+license: "AGPL-3.0-only"
+contents:
+  - src: ./dae_REAL_ARCH_vREAL_VERSION
+    dst: /usr/bin/dae
+  - src: /usr/share/v2ray-rules-dat/geoip.dat
+    dst: /usr/share/dae/geoip.dat
+    type: symlink
+  - src: /usr/share/v2ray-rules-dat/geosite.dat
+    dst: /usr/share/dae/geosite.dat
+    type: symlink 
+  - src: ./example/dae.dae
+    dst: /etc/dae/example.dae
+    type: config
+  - src: ./service/dae.service
+    dst: /lib/systemd/system/dae.service

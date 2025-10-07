@@ -1,0 +1,40 @@
+# This is an example nfpm configuration file.
+# Make sure to check the documentation at https://nfpm.goreleaser.com
+#
+# The lines below are called `modelines`. See `:help modeline`
+# Feel free to remove those if you don't want/need to use them.
+# yaml-language-server: $schema=https://nfpm.goreleaser.com/static/schema.json
+# vim: set ts=2 sw=2 tw=0 fo=cnqoj
+
+name: "v2ray"
+arch: "REAL_ARCH"
+platform: "linux"
+version: "REAL_VERSION"
+section: "default"
+priority: "extra"
+provides:
+  - v2ray
+depends:
+  - v2ray-rules-dat
+maintainer: "dae@daeuniverse"
+description: |
+  A platform for building proxies to bypass network restrictions. 
+vendor: "daeuniverse"
+homepage: "https://github.com/v2fly/v2ray-core"
+license: "MIT"
+contents:
+  - src: ./v2ray_REAL_ARCH_vREAL_VERSION
+    dst: /usr/bin/v2ray
+  - src: /usr/share/v2ray-rules-dat/geoip.dat
+    dst: /usr/share/v2ray/geoip.dat
+    type: symlink
+  - src: /usr/share/v2ray-rules-dat/geosite.dat
+    dst: /usr/share/v2ray/geosite.dat
+    type: symlink 
+  - src: ./example/ray.json
+    dst: /etc/v2ray/blank.json
+    type: config
+  - src: ./service/v2ray.service
+    dst: /lib/systemd/system/v2ray.service
+  - src: ./service/v2ray@.service
+    dst: /lib/systemd/system/v2ray@.service

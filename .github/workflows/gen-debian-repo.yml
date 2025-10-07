@@ -1,0 +1,50 @@
+name: Generate Debian Repo
+
+on:
+    workflow_dispatch:
+    schedule:
+        - cron: "20 */12 * * *"
+
+jobs:
+    update:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - name: Download v2ray rules dat
+              run: |
+                  bash -c "$(cat v2ray-rules-dat.sh)"
+            - name: Download v2rayA
+              run: |
+                  bash -c "$(cat v2raya.sh)"
+            - name: Download xray core
+              run: |
+                  bash -c "$(cat xray.sh)"
+            - name: Download v2ray core
+              run: |
+                  bash -c "$(cat v2ray.sh)"
+            - name: Download Juicity
+              run: |
+                  bash -c "$(cat juicity.sh)"
+            - name: Download dae
+              run: |
+                  bash -c "$(cat dae.sh)"
+            - name: Install nfpm
+              shell: bash
+              run: |
+                  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+                  brew install goreleaser/tap/nfpm
+            - name: Generate debian packages
+              run: |
+                  mkdir -p archive
+                  for apps in v2ray v2raya xray juicity dae; do
+                      VERSION=$(cat $apps-version.txt)
+                      for arch in amd64 arm64 i386 riscv64; do
+                          cat nfpm/$apps.yaml | sed "s/REAL_VERSION/$VERSION/g" | sed "s/REAL_ARCH/$arch/g" > /tmp/$apps_$arch.yaml
+                          nfpm package --config /tmp/$apps_$arch.yaml --target ./archive/$apps_${VERSION}_$arch.deb
+                      done
+                  done
+            - name: Upload Artifacts
+              uses: actions/upload-artifact@v3
+              with:
+                  name: debian-packages
+                  path: archive/*.deb

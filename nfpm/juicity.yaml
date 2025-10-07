@@ -1,0 +1,43 @@
+# This is an example nfpm configuration file.
+# Make sure to check the documentation at https://nfpm.goreleaser.com
+#
+# The lines below are called `modelines`. See `:help modeline`
+# Feel free to remove those if you don't want/need to use them.
+# yaml-language-server: $schema=https://nfpm.goreleaser.com/static/schema.json
+# vim: set ts=2 sw=2 tw=0 fo=cnqoj
+
+name: "v2ray"
+arch: "REAL_ARCH"
+platform: "linux"
+version: "REAL_VERSION"
+section: "default"
+priority: "extra"
+provides:
+  - juicity-server
+  - juicity-client
+depends:
+  - v2ray-rules-dat
+maintainer: "dae@daeuniverse"
+description: |
+  A platform for building proxies to bypass network restrictions. 
+vendor: "daeuniverse"
+homepage: "https://github.com/juicity/juicity"
+license: "AGPL-3.0-only"
+contents:
+  - src: ./juicity-server_REAL_ARCH_vREAL_VERSION
+    dst: /usr/bin/juicity-server
+  - src: ./juicity-client_REAL_ARCH_vREAL_VERSION
+    dst: /usr/bin/juicity-client
+  - src: /usr/share/v2ray-rules-dat/geoip.dat
+    dst: /usr/share/juicity/geoip.dat
+    type: symlink
+  - src: /usr/share/v2ray-rules-dat/geosite.dat
+    dst: /usr/share/juicity/geosite.dat
+    type: symlink 
+  - src: ./example/ray.json
+    dst: /etc/juicity/blank.json
+    type: config
+  - src: ./service/juicity-server.service
+    dst: /lib/systemd/system/juicity-server.service
+  - src: ./service/juicity-client.service
+    dst: /lib/systemd/system/juicity-client.service

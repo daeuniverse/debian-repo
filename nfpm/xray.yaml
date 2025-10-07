@@ -1,0 +1,40 @@
+# This is an example nfpm configuration file.
+# Make sure to check the documentation at https://nfpm.goreleaser.com
+#
+# The lines below are called `modelines`. See `:help modeline`
+# Feel free to remove those if you don't want/need to use them.
+# yaml-language-server: $schema=https://nfpm.goreleaser.com/static/schema.json
+# vim: set ts=2 sw=2 tw=0 fo=cnqoj
+
+name: "xray"
+arch: "REAL_ARCH"
+platform: "linux"
+version: "REAL_VERSION"
+section: "default"
+priority: "extra"
+provides:
+  - xray
+depends:
+  - v2ray-rules-dat
+maintainer: "dae@daeuniverse"
+description: |
+  Xray, Penetrates Everything. Also the best v2ray-core. Where the magic happens. An open platform for various uses.
+vendor: "daeuniverse"
+homepage: "https://github.com/XTLS/Xray-core"
+license: "MPL-2.0"
+contents:
+  - src: ./xray_REAL_ARCH_vREAL_VERSION
+    dst: /usr/bin/xray
+  - src: /usr/share/v2ray-rules-dat/geoip.dat
+    dst: /usr/share/xray/geoip.dat
+    type: symlink
+  - src: /usr/share/v2ray-rules-dat/geosite.dat
+    dst: /usr/share/xray/geosite.dat
+    type: symlink 
+  - src: ./example/ray.json
+    dst: /etc/xray/blank.json
+    type: config
+  - src: ./service/xray.service
+    dst: /lib/systemd/system/xray.service
+  - src: ./service/xray@.service
+    dst: /lib/systemd/system/xray@.service
