@@ -35,6 +35,7 @@ jobs:
                   brew install goreleaser/tap/nfpm
             - name: Generate debian packages
               run: |
+                  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
                   mkdir -p archive
                   for apps in v2ray v2raya xray juicity dae; do
                       VERSION="$(cat "${apps}"_version.txt)"
