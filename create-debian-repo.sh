@@ -11,7 +11,7 @@ export debian_origin="daeuniverse"
 export debian_label="daeuniverse"
 export debian_suite="stable"
 export debian_codename="goose"
-export debian_architecture="amd64 arm64 i386 all"
+export debian_architecture="amd64 arm64 i386 riscv64"
 export debian_components="main"
 export debian_description="A Debian repository for v2rayA, dae and juicity."
 
