@@ -77,7 +77,7 @@ jobs:
               run: | 
                   npm install -g wrangler
                   export CLOUDFLARE_ACCOUNT_ID=${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-                  export CLOUDFLARE_API_TOKEN=${{ secrets.CLOUDFLARE_API }}
+                  export CLOUDFLARE_API_TOKEN=${{ secrets.CLOUDFLARE_API_KEY }}
                   wrangler pages deploy ./repo \
                       --project-name=daeuniverse \
                       --branch=main
