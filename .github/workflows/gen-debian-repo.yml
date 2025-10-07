@@ -64,11 +64,20 @@ jobs:
                   bash -c "$(cat create-debian-repo.sh)"
                   cp public-key.asc repo/public-key.asc
                   npm i markdown-to-html-cli -g
-                  markdown-to-html --output repo/index.html README.md
+                  markdown-to-html --output ./repo/ README.md
             - name: Compress repo
               run: |
-                  zip -r repo.zip repo
+                  cd repo
+                  zip -r ../repo.zip ./
             - name: Upload Artifact
               uses: nanoufo/action-upload-artifacts-and-release-assets@v2
               with:
                 path: repo.zip
+            - name: Upload to Cloudflare
+              run: | 
+                  npm install -g wrangler
+                  wrangler pages deploy ./repo \
+                    --project-name=daeuniverse \
+                    --api-token=${{ secrets.CLOUDFLARE_API_KEY }} \
+                    --account-id=${{ secrets.CLOUDFLARE_ACCOUNT_ID }} \
+                    --branch=main
