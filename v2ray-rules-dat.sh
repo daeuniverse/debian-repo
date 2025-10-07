@@ -13,4 +13,4 @@ rm -f "$v2ray_rules_dat_temp_file"
 curl -L "$v2ray_rules_dat_geoip_url" -o ./geoip.dat
 curl -L "$v2ray_rules_dat_geosite_url" -o ./geosite.dat
 
-echo ${v2ray_rules_dat_remote_version#v} > v2ray-rules-dat_version.txt
+echo ${v2ray_rules_dat_remote_version} > v2ray-rules-dat_version.txt

@@ -40,10 +40,13 @@ jobs:
                   for apps in v2ray v2raya xray juicity dae; do
                       VERSION="$(cat "${apps}"_version.txt)"
                       for arch in amd64 arm64 i386 riscv64; do
-                          cat nfpm/$apps.yaml | sed "s/REAL_VERSION/$VERSION/g" | sed "s/REAL_ARCH/$arch/g" > /tmp/$apps_$arch.yaml
-                          nfpm package --config /tmp/$apps_$arch.yaml --target ./archive/$apps_${VERSION}_$arch.deb
+                          cat nfpm/$apps.yaml | sed "s/REAL_VERSION/$VERSION/g" | sed "s/REAL_ARCH/${arch}/g" > /tmp/${apps}_${arch}.yaml
+                          nfpm package --config /tmp/${apps}_${arch}.yaml --target ./archive/${apps}_${VERSION}_${arch}.deb
                       done
                   done
+                  DAT_VERSION="$(cat ./v2ray-rules-dat_version.txt)"
+                  cat ./nfpm/v2ray-rules-dat.yaml | sed "s/REAL_VERSION/$DAT_VERSION/g" > /tmp/nfpm/v2ray-rules-dat.yaml
+                  nfpm package --config /tmp/nfpm/v2ray-rules-dat.yaml --target ./archive/v2ray-rules-dat_${DAT_VERSION}_all.deb
             - name: Upload Artifacts
               uses: actions/upload-artifact@v4
               with:
