@@ -4,7 +4,14 @@ This repo contains dae, v2rayA, v2ray, xray and juicity programs.
 
 ## Usage
 
-### Add the repository
+### 1. Add the repository
+
+Sometimes you need to install `curl` and `gpg` at first:
+
+```sh
+sudo apt update
+sudo apt install curl gpg
+```
 
 #### For APT version lower than 3.0
 
@@ -17,7 +24,7 @@ EOL
 ```
 #### For APT version 3.0 or higher
 
-Add the repository to your sources list:
+Add the repository to your sources config:
 
 ```sh
 cat <<- EOL | sudo tee /etc/apt/sources.list.d/daeuniverse.sources
@@ -30,13 +37,13 @@ Signed-By: /usr/share/keyrings/daeuniverse-archive-goose.gpg
 EOL
 ```
 
-### Import the GPG key
+### 2. Import the GPG key
 
 ```sh
 curl -fsSL https://daeuniverse.pages.dev/public-key.asc | sudo gpg --dearmor -o /usr/share/keyrings/daeuniverse-archive-goose.gpg
 ```
 
-### Install packages
+### 3. Install packages
 
 Update the package list:
 

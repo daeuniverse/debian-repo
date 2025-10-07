@@ -6,7 +6,7 @@
 # yaml-language-server: $schema=https://nfpm.goreleaser.com/static/schema.json
 # vim: set ts=2 sw=2 tw=0 fo=cnqoj
 
-name: "v2ray"
+name: "juicity"
 arch: "REAL_ARCH"
 platform: "linux"
 version: "REAL_VERSION"
