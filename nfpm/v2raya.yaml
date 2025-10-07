@@ -19,9 +19,9 @@ depends:
   - xray
 maintainer: "dae@daeuniverse"
 description: |
-  A platform for building proxies to bypass network restrictions. 
-vendor: "daeuniverse"
-homepage: "https://github.com/v2fly/v2ray-core"
+  A web GUI client of Project V which supports VMess, VLESS, SS, SSR, Trojan, Tuic and Juicity protocols. 
+vendor: "v2rayA"
+homepage: "https://github.com/v2rayA/v2rayA"
 license: "MIT"
 contents:
   - src: ./v2raya_REAL_ARCH_vREAL_VERSION

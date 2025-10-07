@@ -19,8 +19,8 @@ depends:
   - v2ray-rules-dat
 maintainer: "dae@daeuniverse"
 description: |
-  A platform for building proxies to bypass network restrictions. 
-vendor: "daeuniverse"
+  Juicity is a quic-based proxy protocol implementation. 
+vendor: "Juicity"
 homepage: "https://github.com/juicity/juicity"
 license: "AGPL-3.0-only"
 contents:

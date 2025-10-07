@@ -7,12 +7,12 @@ for dir in conf dists incoming pool; do
   [ -d "repo/$dir" ] || mkdir -p "repo/$dir"
 done
 
-export debian_origin="daeuniverse"
-export debian_label="daeuniverse"
+export debian_origin="DAE Universe"
+export debian_label="goose"
 export debian_suite="stable"
 export debian_codename="goose"
 export debian_architecture="amd64 arm64 i386 riscv64"
-export debian_components="main"
+export debian_components="honk"
 export debian_description="A Debian repository for v2rayA, dae and juicity."
 
 cat > repo/conf/distributions <<- EOL

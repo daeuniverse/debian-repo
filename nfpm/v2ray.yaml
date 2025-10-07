@@ -19,7 +19,6 @@ depends:
 maintainer: "dae@daeuniverse"
 description: |
   A platform for building proxies to bypass network restrictions. 
-vendor: "daeuniverse"
 homepage: "https://github.com/v2fly/v2ray-core"
 license: "MIT"
 contents:
