@@ -10,24 +10,12 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
-            - name: Download v2ray rules dat
+            - name: Download Files
+              shell: bash
               run: |
-                  bash -c "$(cat v2ray-rules-dat.sh)"
-            - name: Download v2rayA
-              run: |
-                  bash -c "$(cat v2raya.sh)"
-            - name: Download xray core
-              run: |
-                  bash -c "$(cat xray.sh)"
-            - name: Download v2ray core
-              run: |
-                  bash -c "$(cat v2ray.sh)"
-            - name: Download Juicity
-              run: |
-                  bash -c "$(cat juicity.sh)"
-            - name: Download dae
-              run: |
-                  bash -c "$(cat dae.sh)"
+                  for script in $(ls downloader/*.sh); do
+                      bash -c "$script"
+                  done
             - name: Install nfpm
               shell: bash
               run: |
@@ -37,7 +25,7 @@ jobs:
               run: |
                   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
                   mkdir -p archive
-                  for apps in v2ray v2raya xray juicity dae; do
+                  for apps in v2ray v2raya xray juicity dae daed; do
                       VERSION="$(cat "${apps}"_version.txt)"
                       for arch in amd64 arm64 i386 riscv64; do
                           cat nfpm/$apps.yaml | sed "s/REAL_VERSION/$VERSION/g" | sed "s/REAL_ARCH/${arch}/g" > /tmp/${apps}_${arch}.yaml

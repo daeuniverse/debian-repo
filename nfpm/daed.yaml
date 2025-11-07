@@ -1,0 +1,27 @@
+name: "daed"
+arch: "REAL_ARCH"
+platform: "linux"
+version: "REAL_VERSION"
+section: "default"
+priority: "extra"
+provides:
+  - daed
+depends:
+  - v2ray-rules-dat
+maintainer: "dae@daeuniverse"
+description: |
+  daed is a integration solution of dae, API and UI.
+vendor: "daeuniverse"
+homepage: "https://github.com/daeuniverse/daed"
+license: "AGPL-3.0-only"
+contents:
+  - src: ./daed_REAL_ARCH_vREAL_VERSION
+    dst: /usr/bin/daed
+  - src: /usr/share/v2ray-rules-dat/geoip.dat
+    dst: /usr/share/daed/geoip.dat
+    type: symlink
+  - src: /usr/share/v2ray-rules-dat/geosite.dat
+    dst: /usr/share/daed/geosite.dat
+    type: symlink
+  - src: ./service/daed.service
+    dst: /lib/systemd/system/daed.service
