@@ -1,0 +1,17 @@
+[Unit]
+Description=daed is a integration solution of dae, API and UI.
+Documentation=https://github.com/daeuniverse/daed
+After=network-online.target docker.service systemd-sysctl.service
+Wants=network-online.target
+Conflicts=dae.service 
+
+[Service]
+Type=simple
+User=root
+LimitNPROC=512
+LimitNOFILE=1048576
+ExecStart=/usr/bin/daed run -c /etc/daed/
+Restart=on-abnormal
+
+[Install]
+WantedBy=multi-user.target
