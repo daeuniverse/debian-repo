@@ -25,3 +25,23 @@ contents:
     type: symlink
   - src: ./service/daed.service
     dst: /lib/systemd/system/daed.service
+  - src: ./desktop/daed/daed.desktop
+    dst: /usr/share/applications/daed.desktop
+  - src: ./desktop/daed/icons/16x16.png
+    dst: /usr/share/icons/hicolor/16x16/apps/daed.png
+  - src: ./desktop/daed/icons/24x24.png
+    dst: /usr/share/icons/hicolor/24x24/apps/daed.png
+  - src: ./desktop/daed/icons/32x32.png
+    dst: /usr/share/icons/hicolor/32x32/apps/daed.png
+  - src: ./desktop/daed/icons/48x48.png
+    dst: /usr/share/icons/hicolor/48x48/apps/daed.png
+  - src: ./desktop/daed/icons/64x64.png
+    dst: /usr/share/icons/hicolor/64x64/apps/daed.png
+  - src: ./desktop/daed/icons/128x128.png
+    dst: /usr/share/icons/hicolor/128x128/apps/daed.png
+  - src: ./desktop/daed/icons/256x256.png
+    dst: /usr/share/icons/hicolor/256x256/apps/daed.png
+  - src: ./desktop/daed/icons/512x512.png
+    dst: /usr/share/icons/hicolor/512x512/apps/daed.png
+  - src: ./desktop/daed/icons/1024x1024.png
+    dst: /usr/share/icons/hicolor/1024x1024/apps/daed.png
