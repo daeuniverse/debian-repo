@@ -16,11 +16,12 @@ jobs:
                   for script in $(ls downloader/*.sh); do
                       bash -c "$script"
                   done
-            - name: Install nfpm
+            - name: Install nfpm and jq
               shell: bash
               run: |
                   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
                   brew install goreleaser/tap/nfpm
+                  brew install jq
             - name: Generate debian packages
               run: |
                   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
