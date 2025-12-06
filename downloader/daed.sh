@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
 
+set -e
+
 daed_temp_file="$(mktemp /tmp/daed.XXXXXX)"
 if ! curl -s "https://api.github.com/repos/daeuniverse/daed/releases" -o "$daed_temp_file"; then
     echo "Error: Cannot get latest version of dae!"
     exit 1
 fi
-daed_remote_version=$(jq .[].tag_name < "$daed_temp_file" | grep -vE "dae-node-parser" | grep -vE "dae-editor" | sed s/\"//g | head -n 1)
+daed_remote_version=$(jq .[].tag_name < "$daed_temp_file" | grep -vE "dae-" | sed s/\"//g | head -n 1)
 daed_url_amd64="https://github.com/daeuniverse/daed/releases/download/${daed_remote_version}/daed-linux-x86_64.zip"
 daed_url_arm64="https://github.com/daeuniverse/daed/releases/download/${daed_remote_version}/daed-linux-arm64.zip"
 daed_url_i386="https://github.com/daeuniverse/daed/releases/download/${daed_remote_version}/daed-linux-x86_32.zip"

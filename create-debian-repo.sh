@@ -2,6 +2,8 @@
 
 set -e
 
+set -e
+
 [ -d repo ] || mkdir repo
 for dir in conf dists incoming pool; do
   [ -d "repo/$dir" ] || mkdir -p "repo/$dir"

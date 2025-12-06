@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 v2raya_temp_file="$(mktemp v2raya_temp_file.XXXXXX)"
 if ! curl -s "https://api.github.com/repos/v2rayA/v2rayA/releases/latest" -o "$v2raya_temp_file"; then
     echo "Error: Cannot get latest version of v2rayA!"

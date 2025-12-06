@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 juicity_temp_file="$(mktemp juicity_temp_file.XXXXXX)"
 if ! curl -s "https://api.github.com/repos/juicity/juicity/releases/latest" -o "$juicity_temp_file"; then
     echo "Error: Cannot get latest version of juicity!"
