@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 dae_temp_file="$(mktemp /tmp/dae.XXXXXX)"
 if ! curl -s "https://api.github.com/repos/daeuniverse/dae/releases/latest" -o "$dae_temp_file"; then
     echo "Error: Cannot get latest version of dae!"
