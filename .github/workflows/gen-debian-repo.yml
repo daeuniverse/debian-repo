@@ -9,7 +9,7 @@ jobs:
     Build-Repo:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v6
             - name: Download Files
               shell: bash
               run: |
@@ -36,12 +36,15 @@ jobs:
                   DAT_VERSION="$(cat ./v2ray-rules-dat_version.txt)"
                   cat ./nfpm/v2ray-rules-dat.yaml | sed "s/REAL_VERSION/$DAT_VERSION/g" > /tmp/v2ray-rules-dat.yaml
                   nfpm package --config /tmp/v2ray-rules-dat.yaml --target ./archive/v2ray-rules-dat_${DAT_VERSION}_all.deb
+            - name: Update package table
+              run: |
+                  bash ./update-package-table.sh
             - name: Install reprepro gpg
               run: |
                 sudo apt update
                 sudo apt install -y reprepro gnupg
             - name: Import GPG key
-              uses: crazy-max/ghaction-import-gpg@v6
+              uses: crazy-max/ghaction-import-gpg@v7
               with:
                   gpg_private_key: ${{ secrets.PRIVATE_KEY }}
                   passphrase: ${{ secrets.PRIVATE_KEY_PWD }}
@@ -54,14 +57,11 @@ jobs:
                   cp public-key.asc repo/public-key.asc
                   npm i markdown-to-html-cli -g
                   markdown-to-html --output ./repo/ README.md
-            - name: Compress repo
-              run: |
-                  cd repo
-                  zip -r ../repo.zip ./
             - name: Upload Artifact
-              uses: nanoufo/action-upload-artifacts-and-release-assets@v2
+              uses: actions/upload-artifact@v7
               with:
-                path: repo.zip
+                name: repo
+                path: ./repo
             - name: Upload to Cloudflare
               run: | 
                   npm install -g wrangler

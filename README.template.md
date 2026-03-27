@@ -61,17 +61,6 @@ sudo apt install v2raya
 This table is generated after packaging completes.
 
 <!-- BEGIN GENERATED PACKAGE TABLE -->
-
-| Software | Version | Project | License |
-| --- | --- | --- | --- |
-| dae | N/A | [https://github.com/daeuniverse/dae](https://github.com/daeuniverse/dae) | AGPL-3.0-only |
-| daed | N/A | [https://github.com/daeuniverse/daed](https://github.com/daeuniverse/daed) | AGPL-3.0-only |
-| Juicity | N/A | [https://github.com/juicity/juicity](https://github.com/juicity/juicity) | AGPL-3.0-only |
-| v2ray | N/A | [https://github.com/v2fly/v2ray-core](https://github.com/v2fly/v2ray-core) | MIT |
-| v2rayA | N/A | [https://github.com/v2rayA/v2rayA](https://github.com/v2rayA/v2rayA) | MIT |
-| Xray | N/A | [https://github.com/XTLS/Xray-core](https://github.com/XTLS/Xray-core) | MPL-2.0 |
-| v2ray-rules-dat | N/A | [https://github.com/Loyalsoldier/v2ray-rules-dat](https://github.com/Loyalsoldier/v2ray-rules-dat) | GPL-3.0 |
-
 <!-- END GENERATED PACKAGE TABLE -->
 
 ## How to edit Systemd Service
