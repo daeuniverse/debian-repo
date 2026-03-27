@@ -14,7 +14,7 @@ description: |
   A web GUI client of Project V which supports VMess, VLESS, SS, SSR, Trojan, Tuic and Juicity protocols. 
 vendor: "v2rayA"
 homepage: "https://github.com/v2rayA/v2rayA"
-license: "MIT"
+license: "AGPL-3.0-only"
 contents:
   - src: ./v2raya_REAL_ARCH_vREAL_VERSION
     dst: /usr/bin/v2raya
