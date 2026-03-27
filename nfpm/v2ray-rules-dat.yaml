@@ -8,7 +8,7 @@ maintainer: "dae@daeuniverse"
 description: |
   Enhanced edition of V2Ray rules dat files, applicable to V2Ray, Xray-core, mihomo(Clash-Meta), hysteria, Trojan-Go and leaf. 
 homepage: "https://github.com/Loyalsoldier/v2ray-rules-dat"
-license: "GPL-3.0"
+license: "GPL-3.0-only"
 contents:
   - src: ./geoip.dat
     dst: /usr/share/v2ray-rules-dat/geoip.dat

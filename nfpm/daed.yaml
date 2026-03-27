@@ -13,7 +13,7 @@ description: |
   daed is a integration solution of dae, API and UI.
 vendor: "daeuniverse"
 homepage: "https://github.com/daeuniverse/daed"
-license: "AGPL-3.0-only"
+license: "MIT AND AGPL-3.0-only"
 contents:
   - src: ./daed_REAL_ARCH_vREAL_VERSION
     dst: /usr/bin/daed

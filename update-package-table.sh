@@ -37,6 +37,24 @@ read_yaml_value() {
   sed -nE "s/^${key}: \"?([^\"]+)\"?$/\1/p" "$file" | head -n 1
 }
 
+license_cell_for_package() {
+  local package="$1"
+  local homepage
+  local license
+
+  homepage="$(read_yaml_value "nfpm/${package}.yaml" homepage)"
+  license="$(read_yaml_value "nfpm/${package}.yaml" license)"
+
+  case "$package" in
+    daed)
+      printf '%s\n' '[MIT](https://github.com/daeuniverse/daed/blob/main/LICENSE) + [AGPL-3.0-only](https://github.com/daeuniverse/dae-wing/blob/main/LICENSE)'
+      ;;
+    *)
+      printf '[%s](%s/blob/main/LICENSE)\n' "$license" "$homepage"
+      ;;
+  esac
+}
+
 resolve_version() {
   local package="$1"
   local version_file="${package}_version.txt"
@@ -71,7 +89,7 @@ generate_table_block() {
   local package
   local software_name
   local homepage
-  local license
+  local license_cell
   local version
 
   printf '%s\n\n' "$start_marker"
@@ -82,7 +100,7 @@ generate_table_block() {
     package="${packages[$index]}"
     software_name="${software_names[$index]}"
     homepage="$(read_yaml_value "nfpm/${package}.yaml" homepage)"
-    license="$(read_yaml_value "nfpm/${package}.yaml" license)"
+    license_cell="$(license_cell_for_package "$package")"
     version="$(resolve_version "$package")"
 
     printf '| %s | %s | [%s](%s) | %s |\n' \
@@ -90,7 +108,7 @@ generate_table_block() {
       "$version" \
       "$homepage" \
       "$homepage" \
-      "$license"
+      "$license_cell"
   done
 
   printf '\n%s\n' "$end_marker"
