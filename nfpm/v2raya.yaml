@@ -22,3 +22,21 @@ contents:
     dst: /lib/systemd/system/v2raya.service
   - src: ./service/v2raya-lite.service
     dst: /lib/systemd/user/v2raya-lite.service
+  - src: ./desktop/v2raya/icons/16x16.png
+    dst: /usr/share/icons/hicolor/16x16/apps/v2raya.png
+  - src: ./desktop/v2raya/icons/24x24.png
+    dst: /usr/share/icons/hicolor/24x24/apps/v2raya.png
+  - src: ./desktop/v2raya/icons/32x32.png
+    dst: /usr/share/icons/hicolor/32x32/apps/v2raya.png
+  - src: ./desktop/v2raya/icons/48x48.png
+    dst: /usr/share/icons/hicolor/48x48/apps/v2raya.png
+  - src: ./desktop/v2raya/icons/64x64.png
+    dst: /usr/share/icons/hicolor/64x64/apps/v2raya.png
+  - src: ./desktop/v2raya/icons/128x128.png
+    dst: /usr/share/icons/hicolor/128x128/apps/v2raya.png
+  - src: ./desktop/v2raya/icons/256x256.png
+    dst: /usr/share/icons/hicolor/256x256/apps/v2raya.png
+  - src: ./desktop/v2raya/icons/512x512.png
+    dst: /usr/share/icons/hicolor/512x512/apps/v2raya.png
+  - src: ./desktop/v2raya/icons/1024x1024.png
+    dst: /usr/share/icons/hicolor/1024x1024/apps/v2raya.png
