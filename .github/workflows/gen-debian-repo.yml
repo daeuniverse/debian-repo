@@ -49,21 +49,20 @@ jobs:
         run: |
           bash ./update-package-table.sh
 
-      - name: Commit version and README updates
+      - name: Commit README to status branch
         shell: bash
         run: |
-          if git diff --quiet -- README.md ./*_version.txt; then
-            echo "No README/version changes to commit."
+          if git diff --quiet -- README.md; then
+            echo "No README changes to commit."
             exit 0
           fi
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add README.md ./*_version.txt
-          git commit -m "chore: update version files and README [skip ci]"
-          git pull --rebase origin "${GITHUB_REF_NAME}"
-          git push origin HEAD:"${GITHUB_REF_NAME}"
+          git add README.md
+          git commit -m "docs(status): update README [skip ci]"
+          git push --force origin HEAD:status
 
       - name: Install reprepro gpg
         run: |
