@@ -8,16 +8,23 @@ provides:
   - v2raya
 depends:
   - v2ray-rules-dat
-  - xray
 maintainer: "dae@daeuniverse"
 description: |
-  A web GUI client of Project V which supports VMess, VLESS, SS, SSR, Trojan, Tuic and Juicity protocols. 
+  A web GUI client of Project V which supports VMess, VLESS, SS, SSR, Trojan, Tuic and Juicity protocols.
 vendor: "v2rayA"
 homepage: "https://github.com/v2rayA/v2rayA"
-license: "AGPL-3.0-only"
+license: "AGPL-3.0-only + MPL 2.0"
 contents:
   - src: ./v2raya_REAL_ARCH_vREAL_VERSION
     dst: /usr/bin/v2raya
+  - src: ./v2raya_core_REAL_ARCH_vREAL_VERSION
+    dst: /usr/bin/v2raya_core
+  - src: /usr/share/v2ray-rules-dat/geoip.dat
+    dst: /usr/share/v2raya/geoip.dat
+    type: symlink
+  - src: /usr/share/v2ray-rules-dat/geosite.dat
+    dst: /usr/share/v2raya/geosite.dat
+    type: symlink
   - src: ./service/v2raya.service
     dst: /lib/systemd/system/v2raya.service
   - src: ./service/v2raya-lite.service
