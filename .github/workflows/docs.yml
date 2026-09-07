@@ -1,0 +1,109 @@
+name: Documentation
+
+on:
+  push:
+    paths:
+      - 'docs/**'
+      - 'scripts/prepare-docs.mjs'
+      - 'tests/docs.test.mjs'
+      - 'README.md'
+      - 'package*.json'
+      - '.github/workflows/docs.yml'
+      - '.github/workflows/gen-repo.yml'
+  pull_request:
+    paths:
+      - 'docs/**'
+      - 'scripts/prepare-docs.mjs'
+      - 'tests/docs.test.mjs'
+      - 'README.md'
+      - 'package*.json'
+      - '.github/workflows/docs.yml'
+      - '.github/workflows/gen-repo.yml'
+  workflow_dispatch:
+  schedule:
+    - cron: '17 3 * * *'
+
+permissions:
+  contents: read
+
+env:
+  PAGES_REF: ${{ vars.DOCS_PAGES_BRANCH || github.event.repository.default_branch }}
+
+concurrency:
+  group: documentation-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Check and build
+    if: github.event_name != 'schedule' || vars.DOCS_PAGES_PREVIEW == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      # A scheduled run starts from the default branch; check out the branch that
+      # the preview deploys so the tested tree is the tree that is published.
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event_name == 'schedule' && env.PAGES_REF || github.ref }}
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm run docs:test
+      - run: npm run docs:build
+      - uses: actions/upload-artifact@v7
+        with:
+          name: documentation-preview
+          path: docs/.vitepress/dist
+          if-no-files-found: error
+
+  pages-build:
+    name: Build Pages preview
+    needs: build
+    if: >-
+      github.event_name != 'pull_request' &&
+      vars.DOCS_PAGES_PREVIEW == 'true' &&
+      (github.event_name == 'schedule' ||
+       github.ref_name == (vars.DOCS_PAGES_BRANCH || github.event.repository.default_branch))
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: read
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          ref: ${{ env.PAGES_REF }}
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/configure-pages@v6
+        id: pages
+      - run: npm ci
+      - run: npm run docs:build
+        env:
+          DOCS_BASE: ${{ steps.pages.outputs.base_path }}/
+          DOCS_SITE_URL: ${{ steps.pages.outputs.base_url }}/
+          DOCS_CLEAN_URLS: 'false'
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: docs/.vitepress/dist
+
+  pages-deploy:
+    name: Deploy Pages preview
+    needs: pages-build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    concurrency:
+      group: documentation-pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@v5
+        id: deployment
