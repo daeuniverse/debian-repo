@@ -1,0 +1,30 @@
+:root {
+  --vp-c-brand-1: #946200;
+  --vp-c-brand-2: #855600;
+  --vp-c-brand-3: #996300;
+  --vp-c-brand-soft: rgba(153, 99, 0, 0.12);
+}
+
+.dark {
+  --vp-c-brand-1: #e8bc64;
+  --vp-c-brand-2: #f0ca7d;
+  --vp-c-brand-3: #d6a449;
+  --vp-c-brand-soft: rgba(232, 188, 100, 0.14);
+  --vp-button-brand-text: var(--vp-c-bg);
+  --vp-button-brand-hover-text: var(--vp-c-bg);
+  --vp-button-brand-active-text: var(--vp-c-bg);
+}
+
+/* Adapt only the imported diagram; retain its original layout and colored nodes. */
+.upstream-diagram-dark { display: none; }
+.dark .upstream-diagram-light { display: none; }
+.dark .upstream-diagram-dark { display: block; }
+
+/* The dashboard screenshot keeps its own light interface; a border separates it
+   from the page instead of inverting or cropping the capture. */
+.app-screenshot {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 8px;
+}

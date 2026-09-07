@@ -1,0 +1,84 @@
+{
+  "lang": "zh-TW",
+  "label": "繁體中文",
+  "prefix": "/zh-TW",
+  "description": "檢查核心需求，安裝 dae，設定 DNS、路由與服務。",
+  "labels": {
+    "install": "安裝",
+    "packages": "套件",
+    "maintenance": "維護",
+    "installation": "安裝指南",
+    "reference": "參考文件",
+    "debian": "Debian / Ubuntu",
+    "available": "其他可用套件",
+    "services": "服務與憑證",
+    "outline": "本頁目錄",
+    "previous": "上一頁",
+    "next": "下一頁",
+    "copy": "複製程式碼",
+    "copied": "已複製",
+    "permalink": "標題連結：",
+    "gentoo": "Gentoo / Calculate",
+    "manual": "使用指南",
+    "configuration": "設定",
+    "development": "開發",
+    "userGuide": "執行與維護",
+    "tutorials": "其他平台",
+    "edit": "編輯此頁",
+    "manualInstall": "手動安裝",
+    "requirements": "Linux 核心需求",
+    "minimalConfiguration": "最小設定",
+    "pppoe": "PPPoE 介面",
+    "concepts": "基礎概念",
+    "overview": "導覽",
+    "fedora": "Fedora / RHEL",
+    "opensuse": "openSUSE",
+    "serviceManagement": "服務管理",
+    "otherSoftware": "v2rayA 與其他軟體",
+    "packageList": "軟體列表",
+    "experimental": "實驗性"
+  },
+  "theme": {
+    "langMenuLabel": "切換語言",
+    "sidebarMenuLabel": "目錄",
+    "returnToTopLabel": "返回頂端",
+    "skipToContentLabel": "跳至正文",
+    "darkModeSwitchLabel": "外觀",
+    "lightModeSwitchTitle": "切換至淺色主題",
+    "darkModeSwitchTitle": "切換至深色主題",
+    "notFound": {
+      "title": "找不到頁面",
+      "quote": "請檢查網址，或返回首頁選擇文件。",
+      "linkLabel": "返回首頁",
+      "linkText": "返回首頁"
+    },
+    "lastUpdated": {
+      "text": "最後更新時間",
+      "formatOptions": {
+        "dateStyle": "medium",
+        "forceLocale": true
+      }
+    }
+  },
+  "search": {
+    "button": {
+      "buttonText": "搜尋",
+      "buttonAriaLabel": "搜尋文件"
+    },
+    "modal": {
+      "displayDetails": "顯示詳細結果",
+      "resetButtonTitle": "清除搜尋",
+      "backButtonTitle": "關閉搜尋",
+      "noResultsText": "沒有符合條件的結果",
+      "footer": {
+        "selectText": "選取",
+        "selectKeyAriaLabel": "Enter 鍵",
+        "navigateText": "切換結果",
+        "navigateUpKeyAriaLabel": "向上方向鍵",
+        "navigateDownKeyAriaLabel": "向下方向鍵",
+        "closeText": "關閉",
+        "closeKeyAriaLabel": "Esc 鍵"
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+# openSUSE
+
+Install daed from the Dae Universe repository.
+
+For openSUSE.
+
+The commands below assume sudo is configured for your account.
+
+## 1. Add the repository
+
+<!--@include: @/.vitepress/snippets/repositories/en-US/opensuse-1.md-->
+
+## 2. Install daed
+
+```sh
+sudo zypper install daed
+```
+
+The package provides `daed.service`; its configuration directory is `/etc/daed/`.
+
+[Upstream setup guide](https://github.com/daeuniverse/daed/blob/main/docs/getting-started.md) · [Service management](/daed/service-management)
