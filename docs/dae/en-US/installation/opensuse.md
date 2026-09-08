@@ -10,9 +10,17 @@ The commands below assume sudo is configured for your account.
 
 ## 2. Install dae
 
-```sh
+::: code-group
+
+```sh [sudo]
 sudo zypper install dae
 ```
+
+```sh [root]
+zypper install dae
+```
+
+:::
 
 The package includes a systemd service. The example is `/etc/dae/example.dae`; save your configuration as `/etc/dae/config.dae`.
 

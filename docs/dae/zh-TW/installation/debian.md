@@ -18,10 +18,19 @@
 
 ## 4. 安裝 dae
 
-```sh
+::: code-group
+
+```sh [sudo]
 sudo apt update
 sudo apt install dae
 ```
+
+```sh [root]
+apt update
+apt install dae
+```
+
+:::
 
 套件包含 systemd 服務。設定範例位於 `/etc/dae/example.dae`，實際設定檔應儲存為 `/etc/dae/config.dae`。
 

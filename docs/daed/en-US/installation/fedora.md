@@ -12,9 +12,17 @@ The commands below assume sudo is configured for your account.
 
 ## 2. Install daed
 
-```sh
+::: code-group
+
+```sh [sudo]
 sudo dnf install daed
 ```
+
+```sh [root]
+dnf install daed
+```
+
+:::
 
 
 

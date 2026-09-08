@@ -10,9 +10,17 @@
 
 ## 2. 安裝 dae
 
-```sh
+::: code-group
+
+```sh [sudo]
 sudo dnf install dae
 ```
+
+```sh [root]
+dnf install dae
+```
+
+:::
 
 :::: details 其他安裝方式：Fedora Copr
 

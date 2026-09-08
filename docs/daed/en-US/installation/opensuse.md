@@ -12,9 +12,17 @@ The commands below assume sudo is configured for your account.
 
 ## 2. Install daed
 
-```sh
+::: code-group
+
+```sh [sudo]
 sudo zypper install daed
 ```
+
+```sh [root]
+zypper install daed
+```
+
+:::
 
 The package provides `daed.service`; its configuration directory is `/etc/daed/`.
 

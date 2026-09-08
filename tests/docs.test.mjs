@@ -15,6 +15,22 @@ const guideFile = (locale, page) => ['packages.md', 'maintenance.md'].includes(p
   : join(guideDirectory(locale), page)
 const commands = text => [...text.matchAll(/```(?:shell|sh|text)(?: \[[^\n]+\])?\n([\s\S]*?)```/g)].map(match => match[1])
 
+// A command needing root is offered twice: a `sudo` tab and a `root` tab carrying
+// the same commands without the prefix. Tabs that name something else — an APT
+// version, a package — keep that name and add the privilege after a separator.
+function assertPrivilegeTabs(text, label) {
+  const tabs = [...text.matchAll(/```sh \[([^\n]+)\]\n([\s\S]*?)```/g)]
+    .filter(tab => /(^|·\s*)(sudo|root)$/.test(tab[1]))
+  assert.ok(tabs.length > 0 && tabs.length % 2 === 0, label)
+  for (let i = 0; i < tabs.length; i += 2) {
+    assert.match(tabs[i][1], /sudo$/, label)
+    assert.match(tabs[i + 1][1], /root$/, label)
+    assert.equal(tabs[i][1].replace(/sudo$/, ''), tabs[i + 1][1].replace(/root$/, ''), label)
+    assert.equal(tabs[i][2].replace(/^sudo /gm, ''), tabs[i + 1][2], label)
+    assert.ok(tabs[i][2].trim().split('\n').every(line => line.startsWith('sudo ')), label)
+  }
+}
+
 async function readDocument(path) {
   let text = await readFile(path, 'utf8')
   for (const match of text.matchAll(/<!--@include: @\/(.*?)-->/g)) {
@@ -101,7 +117,7 @@ test('translated documents preserve routes, commands and required messages', asy
   }
 })
 
-test('repository setup is shared and primary package commands use sudo', async () => {
+test('repository setup is shared and primary install commands offer sudo and root', async () => {
   for (const locale of Object.values(locales)) {
     for (const project of ['dae', 'daed']) {
       for (const name of ['debian', 'fedora', 'opensuse']) {
@@ -112,10 +128,7 @@ test('repository setup is shared and primary package commands use sudo', async (
         assert.ok(includes.length > 0, path)
         for (const match of includes) assert.ok(packages.includes(match[0]), path)
         const primary = (await readDocument(path)).split(':::: details')[0]
-        assert.doesNotMatch(primary, /\[root\]/)
-        for (const code of commands(primary)) {
-          assert.ok(code.trim().split('\n').every(line => line.startsWith('sudo ')), path)
-        }
+        assertPrivilegeTabs(primary, path)
       }
     }
   }
@@ -124,14 +137,7 @@ test('repository setup is shared and primary package commands use sudo', async (
 test('installation privilege tabs preserve the same commands', async () => {
   for (const name of ['gentoo']) {
     const page = await readDocument(guideFile(locales.root, `${name}.md`))
-    const tabs = [...page.matchAll(/```sh \[([^\n]+)\]\n([\s\S]*?)```/g)]
-    assert.ok(tabs.length > 0 && tabs.length % 2 === 0, name)
-    for (let i = 0; i < tabs.length; i += 2) {
-      assert.match(tabs[i][1], /sudo$/)
-      assert.match(tabs[i + 1][1], /root$/)
-      assert.equal(tabs[i][2].replace(/^sudo /gm, ''), tabs[i + 1][2], name)
-      assert.ok(tabs[i][2].trim().split('\n').every(line => line.startsWith('sudo ')), name)
-    }
+    assertPrivilegeTabs(page, name)
   }
 })
 

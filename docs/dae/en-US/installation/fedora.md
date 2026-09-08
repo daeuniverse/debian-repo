@@ -10,9 +10,17 @@ The commands below assume sudo is configured for your account.
 
 ## 2. Install dae
 
-```sh
+::: code-group
+
+```sh [sudo]
 sudo dnf install dae
 ```
+
+```sh [root]
+dnf install dae
+```
+
+:::
 
 :::: details Alternative: Fedora Copr
 

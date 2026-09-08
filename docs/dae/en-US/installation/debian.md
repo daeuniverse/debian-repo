@@ -18,10 +18,19 @@ The commands below assume sudo is configured for your account.
 
 ## 4. Install dae
 
-```sh
+::: code-group
+
+```sh [sudo]
 sudo apt update
 sudo apt install dae
 ```
+
+```sh [root]
+apt update
+apt install dae
+```
+
+:::
 
 The package includes a systemd service. The example is `/etc/dae/example.dae`; save your configuration as `/etc/dae/config.dae`.
 
