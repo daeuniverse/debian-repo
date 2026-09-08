@@ -171,16 +171,28 @@ test('the package installation links are shared by every page that lists them', 
   }
 })
 
+function blankVersions(readme) {
+  // The repository build fills the table before this test runs, so normalise the
+  // fixture back to N/A instead of depending on the state of the working tree.
+  return readme.replace(/<!-- BEGIN GENERATED PACKAGE TABLE -->[\s\S]*?<!-- END GENERATED PACKAGE TABLE -->/,
+    block => block.split('\n').map(line => {
+      const cells = line.split('|')
+      if (cells.length !== 6 || cells[1].trim() === 'Software' || /^\s*-+\s*$/.test(cells[2])) return line
+      return [cells[0], cells[1], ' N/A ', ...cells.slice(3)].join('|')
+    }).join('\n'))
+}
+
 test('all package references include the same generated data; malformed data fails', async () => {
   const directory = await mkdtemp(join(tmpdir(), 'dae-docs-'))
   try {
-    for (const path of ['README.md', 'scripts/prepare-docs.mjs']) {
-      await cp(join(root, path), join(directory, path), { recursive: true })
-    }
+    await cp(join(root, 'scripts/prepare-docs.mjs'), join(directory, 'scripts/prepare-docs.mjs'), { recursive: true })
     const statusPath = join(directory, 'status.md')
-    const fixtureReadme = await readFile(join(directory, 'README.md'), 'utf8')
+    const fixtureReadme = blankVersions(await readFile(join(root, 'README.md'), 'utf8'))
+    await writeFile(join(directory, 'README.md'), fixtureReadme)
     await writeFile(statusPath, fixtureReadme.replaceAll('| N/A |', '| test-version |'))
-    const prepare = () => execFileSync(process.execPath, ['scripts/prepare-docs.mjs'], { cwd: directory, stdio: 'pipe', env: { ...process.env, DOCS_STATUS_README: statusPath } })
+    // Clear the opt-out explicitly: the repository build sets it, and inheriting it
+    // here would silence the failure this test asserts.
+    const prepare = () => execFileSync(process.execPath, ['scripts/prepare-docs.mjs'], { cwd: directory, stdio: 'pipe', env: { ...process.env, DOCS_STATUS_README: statusPath, DOCS_ALLOW_MISSING_VERSIONS: '' } })
     prepare()
     const rows = await readFile(join(directory, 'docs/.vitepress/generated/package-rows.md'), 'utf8')
     const readme = await readFile(join(directory, 'README.md'), 'utf8')
