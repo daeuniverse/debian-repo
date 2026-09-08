@@ -45,13 +45,7 @@ jobs:
         with:
           fetch-depth: 0
           ref: ${{ github.event_name == 'schedule' && env.PAGES_REF || github.ref }}
-      - uses: actions/setup-node@v7
-        with:
-          node-version: '22'
-          cache: npm
-      - run: npm ci
-      - run: npm run docs:test
-      - run: npm run docs:build
+      - uses: ./.github/actions/documentation
       - uses: actions/upload-artifact@v7
         with:
           name: documentation-preview
@@ -75,18 +69,15 @@ jobs:
         with:
           fetch-depth: 0
           ref: ${{ env.PAGES_REF }}
-      - uses: actions/setup-node@v7
-        with:
-          node-version: '22'
-          cache: npm
       - uses: actions/configure-pages@v6
         id: pages
-      - run: npm ci
-      - run: npm run docs:build
-        env:
-          DOCS_BASE: ${{ steps.pages.outputs.base_path }}/
-          DOCS_SITE_URL: ${{ steps.pages.outputs.base_url }}/
-          DOCS_CLEAN_URLS: 'false'
+      # The build job already ran the tests on this tree.
+      - uses: ./.github/actions/documentation
+        with:
+          test: 'false'
+          base: ${{ steps.pages.outputs.base_path }}/
+          site-url: ${{ steps.pages.outputs.base_url }}/
+          clean-urls: 'false'
       - uses: actions/upload-pages-artifact@v5
         with:
           path: docs/.vitepress/dist

@@ -1,0 +1,46 @@
+name: Documentation
+description: Install the dependencies, then validate and build the documentation site.
+
+inputs:
+  node-version:
+    description: Node.js version used for the build.
+    default: '22'
+  test:
+    description: Run the documentation tests.
+    default: 'true'
+  build:
+    description: Build the site into docs/.vitepress/dist.
+    default: 'true'
+  base:
+    description: DOCS_BASE, the path the site is served from. Empty means the root.
+    default: ''
+  site-url:
+    description: DOCS_SITE_URL, the hostname written into the sitemap.
+    default: ''
+  clean-urls:
+    description: DOCS_CLEAN_URLS. Set to false where the host does not resolve extensionless paths.
+    default: ''
+  allow-missing-versions:
+    description: Render N/A instead of failing when a package carries no version.
+    default: 'false'
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v7
+      with:
+        node-version: ${{ inputs.node-version }}
+        cache: npm
+    - run: npm ci
+      shell: bash
+    - if: inputs.test == 'true'
+      run: npm run docs:test
+      shell: bash
+    - if: inputs.build == 'true'
+      run: npm run docs:build
+      shell: bash
+      env:
+        DOCS_BASE: ${{ inputs.base }}
+        DOCS_SITE_URL: ${{ inputs.site-url }}
+        DOCS_CLEAN_URLS: ${{ inputs.clean-urls }}
+        DOCS_ALLOW_MISSING_VERSIONS: ${{ inputs.allow-missing-versions }}

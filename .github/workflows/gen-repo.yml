@@ -61,19 +61,15 @@ jobs:
           git commit --allow-empty -m "docs(status): update README [skip ci]"
           git push --force origin HEAD:status
 
-      - name: Set up Node.js for documentation
-        uses: actions/setup-node@v7
+      # The site and the package repository share one Cloudflare Pages deployment, so
+      # build the documentation before the signing key is imported and the repository
+      # is assembled. A failure here then leaves the live deployment intact.
+      # A package that failed to build leaves N/A in the table, and the status branch
+      # already carries it; render N/A rather than withhold the whole deployment.
+      - name: Check and build documentation
+        uses: ./.github/actions/documentation
         with:
-          node-version: '22'
-          cache: npm
-
-      # The site and the package repository share one Cloudflare Pages deployment,
-      # so validate the documentation before the signing key is imported and the
-      # repository is built. A broken build then leaves the live deployment intact.
-      - name: Check documentation
-        run: |
-          npm ci
-          npm run docs:test
+          allow-missing-versions: 'true'
 
       - name: Install reprepro gpg
         run: |
@@ -99,15 +95,8 @@ jobs:
           cp public-key.asc repo/public-key.asc
           cat public-key.asc | gpg --dearmor -o repo/daeuniverse-archive-goose.gpg
 
-      - name: Build documentation
-        # A package that failed to build leaves N/A in the table, and the status branch
-        # was already overwritten with it. Render N/A rather than abort the deployment,
-        # which would also withhold the APT/RPM repository.
-        env:
-          DOCS_ALLOW_MISSING_VERSIONS: 'true'
-        run: |
-          npm run docs:build
-          cp -a docs/.vitepress/dist/. repo/
+      - name: Copy the site into the repository
+        run: cp -a docs/.vitepress/dist/. repo/
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v7
