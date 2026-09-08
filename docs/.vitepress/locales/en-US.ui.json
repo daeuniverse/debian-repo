@@ -1,0 +1,50 @@
+{
+  "lang": "en-US",
+  "label": "English",
+  "prefix": "",
+  "description": "Check kernel requirements, install dae, and configure DNS, routing and services.",
+  "labels": {
+    "install": "Install",
+    "packages": "Packages",
+    "maintenance": "Maintenance",
+    "installation": "Installation",
+    "reference": "Reference",
+    "debian": "Debian / Ubuntu",
+    "available": "Other available packages",
+    "services": "Services & certificates",
+    "outline": "On this page",
+    "previous": "Previous page",
+    "next": "Next page",
+    "copy": "Copy code",
+    "copied": "Copied",
+    "permalink": "Permalink to",
+    "gentoo": "Gentoo / Calculate",
+    "manual": "Guide",
+    "configuration": "Configuration",
+    "development": "Development",
+    "userGuide": "Usage",
+    "tutorials": "Other platforms",
+    "edit": "Edit this page",
+    "manualInstall": "Manual installation",
+    "requirements": "Linux Kernel Requirement",
+    "minimalConfiguration": "Minimal Configuration",
+    "pppoe": "PPPoE Interface",
+    "concepts": "Concepts",
+    "overview": "Overview",
+    "fedora": "Fedora / RHEL",
+    "opensuse": "openSUSE",
+    "serviceManagement": "Service management",
+    "otherSoftware": "v2rayA & other software",
+    "packageList": "Package list",
+    "experimental": "Experimental"
+  },
+  "theme": {
+    "lastUpdated": {
+      "text": "Last updated",
+      "formatOptions": {
+        "dateStyle": "medium",
+        "forceLocale": true
+      }
+    }
+  }
+}

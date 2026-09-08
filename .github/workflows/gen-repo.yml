@@ -54,17 +54,26 @@ jobs:
       - name: Commit README to status branch
         shell: bash
         run: |
-          if git diff --quiet -- README.md; then
-            echo "No README changes to commit."
-            exit 0
-          fi
-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           git add README.md
-          git commit -m "docs(status): update README [skip ci]"
+          git commit --allow-empty -m "docs(status): update README [skip ci]"
           git push --force origin HEAD:status
+
+      - name: Set up Node.js for documentation
+        uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: npm
+
+      # The site and the package repository share one Cloudflare Pages deployment,
+      # so validate the documentation before the signing key is imported and the
+      # repository is built. A broken build then leaves the live deployment intact.
+      - name: Check documentation
+        run: |
+          npm ci
+          npm run docs:test
 
       - name: Install reprepro gpg
         run: |
@@ -89,8 +98,16 @@ jobs:
           bash -c "$(cat /tmp/create-repo-temp.sh)"
           cp public-key.asc repo/public-key.asc
           cat public-key.asc | gpg --dearmor -o repo/daeuniverse-archive-goose.gpg
-          npm i markdown-to-html-cli -g
-          markdown-to-html --output ./repo/ README.md
+
+      - name: Build documentation
+        # A package that failed to build leaves N/A in the table, and the status branch
+        # was already overwritten with it. Render N/A rather than abort the deployment,
+        # which would also withhold the APT/RPM repository.
+        env:
+          DOCS_ALLOW_MISSING_VERSIONS: 'true'
+        run: |
+          npm run docs:build
+          cp -a docs/.vitepress/dist/. repo/
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v7

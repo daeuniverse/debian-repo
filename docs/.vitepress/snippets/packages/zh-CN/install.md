@@ -1,0 +1,5 @@
+- [Debian / Ubuntu](/zh-CN/guide/packages/debian)
+- [Fedora / RHEL](/zh-CN/guide/packages/fedora)
+- [openSUSE](/zh-CN/guide/packages/opensuse)
+- [Gentoo / Calculate](/zh-CN/guide/packages/gentoo)
+- [Arch Linux / Manjaro](/zh-CN/guide/packages/arch)
