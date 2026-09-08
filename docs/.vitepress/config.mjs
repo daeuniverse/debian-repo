@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitepress'
 import { locales } from './locales.mjs'
 import upstream from './upstream.json' with { type: 'json' }
+import versions from './generated/versions.json' with { type: 'json' }
 
 const organizationUrl = 'https://github.com/daeuniverse'
 // Edit links resolve inside this repository; the footer and the social link address the
@@ -11,6 +12,22 @@ const base = process.env.DOCS_BASE || '/'
 function pageLocale(relativePath) {
   return Object.values(locales).find(locale => locale.prefix &&
     (relativePath.startsWith(locale.prefix.slice(1) + '/') || relativePath.startsWith(`dae/${locale.lang}/`) || relativePath.startsWith(`daed/${locale.lang}/`))) || locales.root
+}
+
+// The versions come from the generated table, so the menu lists whatever the
+// repository actually published this build. dae leads because it names the project.
+const packageLinks = { dae: '/dae/', daed: '/daed/' }
+function versionMenu(prefix) {
+  const entries = Object.entries(versions)
+  if (!entries.length) return []
+  const [leadName, leadVersion] = entries[0]
+  return [{
+    text: `${leadName} v${leadVersion}`,
+    items: entries.map(([name, version]) => ({
+      text: `${name} ${version}`,
+      link: `${prefix}${packageLinks[name] || '/guide/packages'}`
+    }))
+  }]
 }
 
 function localeConfig({ lang, label, prefix, description, labels: t, theme }) {
@@ -40,7 +57,8 @@ function localeConfig({ lang, label, prefix, description, labels: t, theme }) {
       editLink: { text: t.edit, pattern: process.env.DOCS_EDIT_URL || `${repositoryUrl}/edit/main/docs/:path` },
       nav: [
         { text: t.manual, link: `${prefix}/dae/` },
-        { text: t.development, link: `${prefix}/dae/development/contribute` }
+        { text: t.development, link: `${prefix}/dae/development/contribute` },
+        ...versionMenu(prefix)
       ],
       sidebar: [
         {

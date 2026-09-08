@@ -153,6 +153,16 @@ test('the gentoo overlay setup is shared by every gentoo page', async () => {
   }
 })
 
+test('the version menu and the package table come from the same rows', async () => {
+  const generated = join(root, 'docs/.vitepress/generated')
+  const rows = (await readFile(join(generated, 'package-rows.md'), 'utf8')).trim().split('\n')
+    .map(row => row.split('|').slice(1, -1).map(cell => cell.trim()))
+  const versions = JSON.parse(await readFile(join(generated, 'versions.json'), 'utf8'))
+  assert.deepEqual(versions, Object.fromEntries(rows.filter(row => row[1] !== 'N/A').map(row => [row[0], row[1]])))
+  // A package the build could not resolve is absent, so the menu never offers 'N/A'.
+  assert.ok(!Object.values(versions).includes('N/A'))
+})
+
 test('the package installation links are shared by every page that lists them', async () => {
   for (const locale of Object.values(locales)) {
     const include = `<!--@include: @/.vitepress/snippets/packages/${locale.lang}/install.md-->`
