@@ -3,7 +3,7 @@
 <!-- quick-start-minimal-configuration:start -->
 # 最小設定
 
-使用此範例前，請設定網路介面並填入訂閱連結。`geoip` 和 `geosite` 規則需要對應的資料檔案，請參閱[執行階段相依套件](/zh-TW/dae/user-guide/build-by-yourself)。
+使用此範例前，請設定網路介面並填入訂閱連結。`geoip` 和 `geosite` 規則需要對應的資料檔案，請參閱[執行階段相依套件](/zh-TW/dae/user-guide/build-by-yourself#執行階段相依套件)。
 
 ```shell
 global {

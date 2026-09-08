@@ -2,7 +2,7 @@
 
 ## Customize a systemd service
 
-If you want to edit the systemd service file, you can just run(for example, for `daed` service):
+To edit a systemd service file, run the following command. The example edits the `daed` service:
 
 ::: code-group
 
@@ -16,9 +16,9 @@ systemctl edit --full daed.service
 
 :::
 
-New file will be placed in `/etc/systemd/system/daed.service`, instead of in `/lib/systemd/system/daed.service`, and new file will not be overwritten when package is updated.
+The new file is placed in `/etc/systemd/system/daed.service` rather than `/lib/systemd/system/daed.service`, and it is not overwritten when the package is updated.
 
-## How to set ACL to allow non-root user to read letsencrypt certs
+## Let a non-root user read Let's Encrypt certificates
 
 We use the `nobody` user to run the v2ray, xray, juicity and juicity-rs services, and the `nobody` user does not have permission to read the certs in `/etc/letsencrypt/live`, so you need to set ACL to allow non-root user to read letsencrypt certs.
 
