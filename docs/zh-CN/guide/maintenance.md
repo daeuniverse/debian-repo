@@ -4,9 +4,17 @@
 
 编辑 systemd 服务文件，以 `daed` 为例：
 
-```sh
+::: code-group
+
+```sh [sudo]
 sudo systemctl edit --full daed.service
 ```
+
+```sh [root]
+systemctl edit --full daed.service
+```
+
+:::
 
 新文件保存在 `/etc/systemd/system/daed.service`，原文件仍位于 `/lib/systemd/system/daed.service`。更新软件包时不会覆盖新文件。
 
@@ -18,19 +26,44 @@ v2ray、xray、juicity 和 juicity-rs 服务以 `nobody` 用户身份运行。�
 
 以下以 Debian、Ubuntu 为例：
 
-```sh
+::: code-group
+
+```sh [sudo]
 sudo apt install acl
 ```
 
+```sh [root]
+apt install acl
+```
+
+:::
+
 ### 授予 `nobody` 证书读取权限
 
-```sh
+::: code-group
+
+```sh [sudo]
 sudo setfacl -R -m u:nobody:rX /etc/letsencrypt/{live,archive}
 sudo setfacl -m u:nobody:rX /etc/letsencrypt
 ```
 
+```sh [root]
+setfacl -R -m u:nobody:rX /etc/letsencrypt/{live,archive}
+setfacl -m u:nobody:rX /etc/letsencrypt
+```
+
+:::
+
 ### 在证书续期后自动设置 ACL
 
-```sh
+::: code-group
+
+```sh [sudo]
 sudo certbot renew --deploy-hook "setfacl -R -m u:nobody:rX /etc/letsencrypt/{live,archive}"
 ```
+
+```sh [root]
+certbot renew --deploy-hook "setfacl -R -m u:nobody:rX /etc/letsencrypt/{live,archive}"
+```
+
+:::

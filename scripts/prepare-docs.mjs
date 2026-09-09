@@ -63,4 +63,9 @@ if (rows.some(row => row[1] === 'N/A')) {
 const directory = new URL('docs/.vitepress/generated/', root)
 await mkdir(directory, { recursive: true })
 await writeFile(new URL('package-rows.md', directory), rows.map(row => `| ${row.join(' | ')} |`).join('\n') + '\n')
+// The same rows as an object, so a page can name one version in a sentence
+// instead of including the whole table. A package the build could not resolve
+// is absent rather than 'N/A', so a consumer renders nothing for it.
+const versions = Object.fromEntries(rows.filter(row => row[1] !== 'N/A').map(row => [row[0], row[1]]))
+await writeFile(new URL('versions.json', directory), JSON.stringify(versions, null, 2) + '\n')
 console.log(`Prepared ${rows.length} package rows shared by all documentation locales`)

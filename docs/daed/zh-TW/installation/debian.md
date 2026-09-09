@@ -20,10 +20,19 @@
 
 ## 4. 安裝 daed
 
-```sh
+::: code-group
+
+```sh [sudo]
 sudo apt update
 sudo apt install daed
 ```
+
+```sh [root]
+apt update
+apt install daed
+```
+
+:::
 
 套件提供 `daed.service`，設定目錄為 `/etc/daed/`。
 

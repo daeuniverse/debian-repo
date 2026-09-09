@@ -20,10 +20,19 @@ The commands below assume sudo is configured for your account.
 
 ## 4. Install daed
 
-```sh
+::: code-group
+
+```sh [sudo]
 sudo apt update
 sudo apt install daed
 ```
+
+```sh [root]
+apt update
+apt install daed
+```
+
+:::
 
 The package provides `daed.service`; its configuration directory is `/etc/daed/`.
 

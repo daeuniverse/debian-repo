@@ -80,5 +80,5 @@ sudo emerge --ask dev-libs/v2ray-rules-dat-bin::gentoo-zh
 ### 可选：镜像与二进制包
 
 ::: details 镜像与二进制包
-Distfiles 镜像、binhost 频道和签名验证的配置方法见 [gentoo-zh overlay 文档](https://gentoozh.org/overlay/)。可用的二进制包以[软件包列表](https://distfiles.gentoozh.org/packages)为准；没有合适的二进制包时，Portage 可以从源代码编译。
+Distfiles 镜像、binhost 频道和签名验证的配置方法见 [gentoo-zh overlay 文档](https://gentoozh.org/overlay/)。可用的二进制包以[二进制包列表](https://distfiles.gentoozh.org/packages)为准；没有合适的二进制包时，Portage 可以从源代码编译。
 :::

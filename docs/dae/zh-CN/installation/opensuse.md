@@ -10,9 +10,17 @@
 
 ## 2. 安装 dae
 
-```sh
+::: code-group
+
+```sh [sudo]
 sudo zypper install dae
 ```
+
+```sh [root]
+zypper install dae
+```
+
+:::
 
 软件包包含 systemd 服务。配置示例位于 `/etc/dae/example.dae`，实际配置文件应保存为 `/etc/dae/config.dae`。
 

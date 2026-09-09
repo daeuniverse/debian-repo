@@ -12,9 +12,17 @@
 
 ## 2. 安裝 daed
 
-```sh
+::: code-group
+
+```sh [sudo]
 sudo dnf install daed
 ```
+
+```sh [root]
+dnf install daed
+```
+
+:::
 
 
 

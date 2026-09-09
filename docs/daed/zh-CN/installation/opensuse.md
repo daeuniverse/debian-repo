@@ -12,9 +12,17 @@
 
 ## 2. 安装 daed
 
-```sh
+::: code-group
+
+```sh [sudo]
 sudo zypper install daed
 ```
+
+```sh [root]
+zypper install daed
+```
+
+:::
 
 软件包提供 `daed.service`，配置目录为 `/etc/daed/`。
 

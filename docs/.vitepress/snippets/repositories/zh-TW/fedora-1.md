@@ -1,5 +1,13 @@
-從套件來源下載設定檔，GPG 公鑰會自動匯入。
+從套件來源下載設定檔，其中帶有 GPG 公鑰位址。首次使用時 DNF 會詢問是否匯入公鑰。
 
-```sh
+::: code-group
+
+```sh [sudo]
 sudo curl -fsSL -o /etc/yum.repos.d/daeuniverse.repo https://daeuniverse.pages.dev/daeuniverse.repo
 ```
+
+```sh [root]
+curl -fsSL -o /etc/yum.repos.d/daeuniverse.repo https://daeuniverse.pages.dev/daeuniverse.repo
+```
+
+:::
