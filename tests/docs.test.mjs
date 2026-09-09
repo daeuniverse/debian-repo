@@ -154,13 +154,35 @@ test('the gentoo overlay setup is shared by every gentoo page', async () => {
 })
 
 test('the version menu and the package table come from the same rows', async () => {
-  const generated = join(root, 'docs/.vitepress/generated')
-  const rows = (await readFile(join(generated, 'package-rows.md'), 'utf8')).trim().split('\n')
-    .map(row => row.split('|').slice(1, -1).map(cell => cell.trim()))
-  const versions = JSON.parse(await readFile(join(generated, 'versions.json'), 'utf8'))
-  assert.deepEqual(versions, Object.fromEntries(rows.filter(row => row[1] !== 'N/A').map(row => [row[0], row[1]])))
-  // A package the build could not resolve is absent, so the menu never offers 'N/A'.
-  assert.ok(!Object.values(versions).includes('N/A'))
+  // The generated directory is a build product, so this generates its own rather
+  // than reading whatever a previous build happened to leave in the working tree.
+  const directory = await mkdtemp(join(tmpdir(), 'dae-versions-'))
+  try {
+    await cp(join(root, 'scripts/prepare-docs.mjs'), join(directory, 'scripts/prepare-docs.mjs'), { recursive: true })
+    const fixture = blankVersions(await readFile(join(root, 'README.md'), 'utf8'))
+    await writeFile(join(directory, 'README.md'), fixture)
+    // One package stays unresolved, so the two files have to disagree in the one
+    // way that matters: the row keeps N/A and the menu leaves the package out.
+    const [withheld] = fixture.match(/^\| ([^|]+) \| N\/A \|/m).slice(1).map(cell => cell.trim())
+    const statusPath = join(directory, 'status.md')
+    await writeFile(statusPath, fixture.split('\n')
+      .map(line => line.startsWith(`| ${withheld} |`) ? line : line.replace('| N/A |', '| test-version |'))
+      .join('\n'))
+    execFileSync(process.execPath, ['scripts/prepare-docs.mjs'], { cwd: directory, stdio: 'pipe',
+      env: { ...process.env, DOCS_STATUS_README: statusPath, DOCS_ALLOW_MISSING_VERSIONS: 'true' } })
+
+    const generated = join(directory, 'docs/.vitepress/generated')
+    const rows = (await readFile(join(generated, 'package-rows.md'), 'utf8')).trim().split('\n')
+      .map(row => row.split('|').slice(1, -1).map(cell => cell.trim()))
+    const versions = JSON.parse(await readFile(join(generated, 'versions.json'), 'utf8'))
+    assert.deepEqual(versions, Object.fromEntries(rows.filter(row => row[1] !== 'N/A').map(row => [row[0], row[1]])))
+    // A package the build could not resolve is absent, so the menu never offers 'N/A'.
+    assert.ok(!Object.values(versions).includes('N/A'))
+    assert.equal(rows.find(row => row[0] === withheld)[1], 'N/A')
+    assert.ok(!(withheld in versions), `${withheld} resolved to no version and must not reach the menu`)
+  } finally {
+    await rm(directory, { recursive: true, force: true })
+  }
 })
 
 test('the package installation links are shared by every page that lists them', async () => {
