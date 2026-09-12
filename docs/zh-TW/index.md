@@ -42,4 +42,8 @@ features:
     details: "走在 dae 主線前面的分支，重構架構並最佳化效能。"
     link: /zh-TW/kdae
     linkText: "了解 kdae"
+  - title: "DaedNext"
+    details: "Rust 版 daed，把面板和 DaeNext 核心打包在一起，尚未發布。"
+    link: /zh-TW/daednext
+    linkText: "了解 DaedNext"
 ---
