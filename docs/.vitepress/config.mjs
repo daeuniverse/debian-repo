@@ -100,7 +100,8 @@ function localeConfig({ lang, label, prefix, description, labels: t, theme }) {
         ] },
         { text: t.experimental, collapsed: false, items: [
           { text: 'honk', link: `${prefix}/honk` },
-          { text: 'kdae', link: `${prefix}/kdae` }
+          { text: 'kdae', link: `${prefix}/kdae` },
+          { text: 'DaedNext', link: `${prefix}/daednext` }
         ] },
         { text: t.development, collapsed: false, items: manualItems('development') },
         { text: t.reference, items: [

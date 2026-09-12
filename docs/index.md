@@ -42,4 +42,8 @@ features:
     details: "A branch running ahead of dae, reworking the architecture and the performance."
     link: /kdae
     linkText: "About kdae"
+  - title: "DaedNext"
+    details: "daed in Rust, bundling the dashboard with the DaeNext core. Not yet released."
+    link: /daednext
+    linkText: "About DaedNext"
 ---
